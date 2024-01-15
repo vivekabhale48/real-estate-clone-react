@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { toast } from "react-toastify";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Signin = () => {
   const [showPassword, setPassword] = useState(false);
@@ -10,6 +12,7 @@ const Signin = () => {
     password: "",
   });
   const { email, password } = formData;
+  const navigate = useNavigate();
 
   //The spread operator creates the copy of the existing object and stores it into the previousValue variable, now the changes in the object is done on this existing copy of object and then it is passed to the setFormData
   function handleOnChange(e) {
@@ -17,6 +20,22 @@ const Signin = () => {
       ...previousValue,
       [e.target.id]: e.target.value,
     }));
+  }
+
+  //OnSubmit
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      if(userCredentials.user) {
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Bad user credentials")
+      console.log(error)
+    }
   }
 
   return (
@@ -32,7 +51,7 @@ const Signin = () => {
         </div>
 
         <div className="md:w-[40%] max-md:w-full flex flex-col justify-center items-end">
-          <form className="w-full" action="">
+          <form onSubmit={onSubmit} className="w-full" action="">
             <input
               className="w-full p-2 md:mb-7 max-md:mb-4 focus:outline-none rounded"
               type="email"
@@ -73,7 +92,7 @@ const Signin = () => {
                 Forgot Password?
               </Link>
             </div>
-            <button className="uppercase bg-blue-700 text-white w-full py-2 text-[14px] rounded">
+            <button type="submit" className="uppercase bg-blue-700 text-white w-full py-2 text-[14px] rounded">
               Sign in
             </button>
             <div className="flex justify-center items-center my-7 max-md:my-4">
