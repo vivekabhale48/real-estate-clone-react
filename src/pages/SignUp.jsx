@@ -36,7 +36,7 @@ const SignUp = () => {
       })
       const user = userCredentials.user;
 
-      //Uptill the above code the user got save in the Authentication of the database now tthe below code is to save the user in the FireBase database. So we cant store the password in the database hence we are removing the password and also adding the timestamp.
+      //Uptil the above code the user got save in the Authentication of the database now the below code is to save the user in the FireBase database. So we cant store the password in the database hence we are removing the password and also adding the timestamp.
 
       const formDataCopy = {...formData};
       delete formDataCopy.password;
