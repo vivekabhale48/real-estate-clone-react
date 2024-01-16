@@ -1,5 +1,7 @@
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
 
 const ForgotPassword = () => {
@@ -8,6 +10,17 @@ const ForgotPassword = () => {
   //The spread operator creates the copy of the existing object and stores it into the previousValue variable, now the changes in the object is done on this existing copy of object and then it is passed to the setFormData
   function handleOnChange(e) {
     setEmail(e.target.value);
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Email was sent !")
+    } catch (error) {
+      toast.error("Could not send reset password!")
+    }
   }
   return (
     <section className="mt-6 h-[calc(100vh-87px)] xl:max-w-[1280px] lg:max-w-[1024px] md:max-w-[768px] mx-auto">
@@ -22,7 +35,7 @@ const ForgotPassword = () => {
         </div>
 
         <div className="md:w-[40%] max-md:w-full flex flex-col justify-center items-end">
-          <form className="w-full" action="">
+          <form onSubmit={onSubmit} className="w-full" action="">
             <input
               className="w-full p-2 focus:outline-none rounded"
               type="email"
@@ -42,7 +55,7 @@ const ForgotPassword = () => {
                 Sign In
               </Link>
             </div>
-            <button className="uppercase bg-blue-700 text-white w-full py-2 text-[14px] rounded">
+            <button type="submit" className="uppercase bg-blue-700 text-white w-full py-2 text-[14px] rounded">
               Send Reset Email
             </button>
             <div className="flex justify-center items-center my-7 max-md:my-4">
