@@ -1,11 +1,23 @@
-import React from 'react'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const Header = () => {
    
     const location = useLocation();
     const navigate = useNavigate();
-
+    const [privateRoute, setPrivateRoute] = useState("SignIn") 
+    const auth = getAuth();
+    useEffect(()=>{
+        onAuthStateChanged(auth,(user)=>{
+            if(user) {
+                setPrivateRoute("Profile")
+            }
+            else {
+                setPrivateRoute("SignIn")
+            }
+        })
+    },[auth])
     function pathMatchRoute(path) {
         if(path === location.pathname) return true;
     }
@@ -20,7 +32,7 @@ const Header = () => {
                 <ul  onClick={()=>navigate("/")} className={`cursor-pointer py-5 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMatchRoute("/") && "!text-black !border-b-blue-400"}`}>Home</ul>
 
                 <ul  onClick={()=>navigate("/offers")} className={`cursor-pointer py-5 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMatchRoute("/offers") && "!text-black !border-b-blue-400"}`}>Offers</ul>
-                <ul  onClick={()=>navigate("/sign-in")} className={`cursor-pointer py-5 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMatchRoute("/sign-in") && "!text-black !border-b-blue-400"}`}>SignIn</ul>
+                <ul  onClick={()=>navigate("/profile")} className={`cursor-pointer py-5 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${(pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) && "!text-black !border-b-blue-400"}`}>{privateRoute}</ul>
             </div>
         </header>
     </div>
