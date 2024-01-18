@@ -22,7 +22,7 @@ const Header = () => {
         if(path === location.pathname) return true;
     }
   return (
-    <div className='bg-white shadow-sm sticky top-0 z-50'>
+    <div className='bg-white shadow-sm sticky top-0 z-40'>
         <header className='flex justify-between px-3 container mx-auto'>
             <div className='flex cursor-pointer align-middle justify-center py-5' onClick={()=>navigate("/")}>
                 <img className='h-5 mr-2' src="assets/realestateindia-logo.svg" alt="realestate-logo" />
