@@ -1,14 +1,25 @@
 import { getAuth, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { FcHome } from "react-icons/fc";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
+import ListingItem from "../components/ListingItem";
 
 const Profile = () => {
   const auth = getAuth();
   const navigate = useNavigate();
+  const [getListings, setListings] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
@@ -50,6 +61,30 @@ const Profile = () => {
       toast.error("Could not update the Profile Name");
     }
   }
+
+  useEffect(() => {
+    async function getUsersListing() {
+      const listingRef = collection(db, "listings");
+      const q = query(
+        listingRef,
+        where("creator_id", "==", auth.currentUser.uid),
+        orderBy("timestamp", "desc")
+      );
+      const querySnap = await getDocs(q);
+      console.log(querySnap);
+      let listings = [];
+      querySnap.forEach((doc)=>{
+        console.log(doc.id)
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        })
+      })
+      setListings(listings);
+      setLoading(false);
+    }
+    getUsersListing();
+  }, [auth.currentUser.uid]);
 
   return (
     <>
@@ -99,13 +134,33 @@ const Profile = () => {
           </form>
 
           <button className="bg-blue-500 md:w-[50%] md:mb-6 max-md:mb-4 w-full text-white font-medium uppercase px-4 py-2 rounded shadow-md hover:shadow-lg transition ease-in-out hover:bg-blue-800 text-sm duration-150">
-            <Link to="/create-listing" className="flex items-center justify-center">
-              <FcHome className="bg-white rounded-full p-[1px] text-2xl mr-2"/>
+            <Link
+              to="/create-listing"
+              className="flex items-center justify-center"
+            >
+              <FcHome className="bg-white rounded-full p-[1px] text-2xl mr-2" />
               Sell or Rent your Home
             </Link>
           </button>
         </div>
       </section>
+      <div className="px-2 mx-auto max-w-6xl">
+      {
+        !loading && getListings.length > 0 && (
+          <>
+            <h2 className="text-2xl text-center font-semibold">My Listings</h2>
+            <ul>
+              {
+                getListings.map((list)=>(
+                  <ListingItem key={list.id} id={list.id} listing={list.data}/>
+                ))
+              }
+            </ul>
+          </>
+        )
+      }
+
+      </div>
     </>
   );
 };

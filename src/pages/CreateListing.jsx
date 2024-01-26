@@ -161,11 +161,12 @@ const CreateListing = () => {
       return;
     });
 
-    console.log(imgUrls);
     const formDataCopy = {
       ...formData,
       imgUrls,
       geolocation,
+      creator_name: auth.currentUser.displayName,
+      creator_id: auth.currentUser.uid,
       timestamp: serverTimestamp(),
     }
 
