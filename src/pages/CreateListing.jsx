@@ -184,7 +184,7 @@ const CreateListing = () => {
   if (loading) return <Spinner />;
 
   return (
-    <section className="mt-6 xl:max-w-[1280px] lg:max-w-[1024px] md:max-w-[768px] mx-auto">
+    <section className="mt-6 xl:max-w-[1280px] lg:max-w-[1024px] mx-auto">
       <h1 className="text-3xl font-bold text-center mt-6">My Profile</h1>
       <div className="mt-6 px-3 flex flex-col justify-center max-w-[740px] mx-auto">
         <form onSubmit={onSubmit}>

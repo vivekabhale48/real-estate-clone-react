@@ -23,7 +23,7 @@ const Header = () => {
     }
   return (
     <div className='bg-white shadow-sm sticky top-0 z-40'>
-        <header className='flex justify-between px-3 container mx-auto'>
+        <header className='flex justify-between px-3 xl:max-w-[1280px] lg:max-w-[1024px] mx-auto'>
             <div className='flex cursor-pointer align-middle justify-center py-5' onClick={()=>navigate("/")}>
                 <img className='h-5 mr-2' src="assets/realestateindia-logo.svg" alt="realestate-logo" />
                 <img className='h-5' src="assets/realestateindia-icon.svg" alt="realestate-icon"/>

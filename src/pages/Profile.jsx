@@ -82,13 +82,16 @@ const Profile = () => {
       })
       setListings(listings);
       setLoading(false);
+      setTimeout(() => {
+        console.log(getListings);
+      }, 2000);
     }
     getUsersListing();
   }, [auth.currentUser.uid]);
 
   return (
     <>
-      <section className="mt-6 xl:max-w-[1280px] lg:max-w-[1024px] md:max-w-[768px] mx-auto">
+      <section className="mt-6 xl:max-w-[1280px] lg:max-w-[1024px] mx-auto">
         <h1 className="text-3xl font-bold text-center mt-6">My Profile</h1>
         <div className="mt-6 px-3 flex flex-col justify-center items-center">
           <form action="" className="w-full flex flex-col items-center">
@@ -149,7 +152,7 @@ const Profile = () => {
         !loading && getListings.length > 0 && (
           <>
             <h2 className="text-2xl text-center font-semibold">My Listings</h2>
-            <ul>
+            <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {
                 getListings.map((list)=>(
                   <ListingItem key={list.id} id={list.id} listing={list.data}/>

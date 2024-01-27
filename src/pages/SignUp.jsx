@@ -55,7 +55,7 @@ const SignUp = () => {
     }
   }
   return (
-    <section className="mt-6 h-[calc(100vh-87px)] xl:max-w-[1280px] lg:max-w-[1024px] md:max-w-[768px] mx-auto">
+    <section className="mt-6 h-[calc(100vh-87px)] xl:max-w-[1280px] lg:max-w-[1024px] mx-auto">
       <h1 className="text-3xl text-center  font-bold">Sign Up</h1>
       <div className="flex max-md:flex-col max-md:items-center justify-center md:gap-20 max-md:gap-10 flex-wrap mx-auto md:mt-24 max-md:mt-10 max-md:px-5">
         <div className="w-[40%] max-md:w-[60%]">
