@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
+import { BsCurrencyRupee } from "react-icons/bs";
 import { getAuth } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { useNavigate } from "react-router-dom";
-import { BsCurrencyRupee } from "react-icons/bs";
-const CreateListing = () => {
+import { useNavigate, useParams } from "react-router-dom";
+const EditListing = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const [geolocationEnabled, setGeolocation] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [listing, setListing] = useState(null);
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
@@ -45,6 +46,33 @@ const CreateListing = () => {
     longitude,
     images,
   } = formData;
+
+  const params = useParams();
+  useEffect(()=>{
+    setLoading(true);
+    async function fetchListing() {
+        const docRef = doc(db, "listings", params.listingId);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()) {
+            setListing(docSnap.data());
+            setFormData({...docSnap.data()});
+            setLoading(false);
+
+        }
+        else {
+            navigate("/");
+            toast.error("Listing does not Exists!")
+        }
+    }
+    fetchListing();
+  },[navigate, params.listingId])
+
+  useEffect(()=>{
+    if(listing && listing.creator_id !== auth.currentUser.uid) {
+        toast.error("You can't edit this listing.");
+        navigate("/");
+    }
+  },[auth.currentUser.uid, listing, navigate]);
   const onChange = (e) => {
     let boolean = null;
     //This if else block is written to convert the string true false to boolean true false. Otherwise it wont works
@@ -175,9 +203,10 @@ const CreateListing = () => {
     delete formDataCopy.latitude;
     delete formDataCopy.longitude;
 
-    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
+    const docRef = doc(db, "listings", params.listingId);
+    await updateDoc(docRef, formDataCopy)
     setLoading(false);
-    toast.success("Listing created Successfully!")
+    toast.success("Listing Edited Successfully!")
     navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
 
@@ -185,7 +214,7 @@ const CreateListing = () => {
 
   return (
     <section className="mt-6 xl:max-w-[1280px] lg:max-w-[1024px] mx-auto">
-      <h1 className="text-3xl font-bold text-center mt-6">My Profile</h1>
+      <h1 className="text-3xl font-bold text-center mt-6">Edit List</h1>
       <div className="mt-6 px-3 flex flex-col justify-center max-w-[740px] mx-auto">
         <form onSubmit={onSubmit}>
           <div className="md:mb-6 max-md:mb-4">
@@ -422,7 +451,7 @@ const CreateListing = () => {
                 className="px-7 py-3 font-medium text-sm uppercase shadow-md hover:shadow-lg rounded focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out text-center"
               />
               {type === "rent" && (
-                <p className="text-md font-semibold flex items-center"><BsCurrencyRupee/> / Month</p>
+                <p className="text-md font-semibold flex justify-center items-center"><BsCurrencyRupee/> / Month</p>
               )}
             </div>
           </div>
@@ -460,7 +489,7 @@ const CreateListing = () => {
             type="submit"
             className="mb-6 w-full px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
           >
-            Create Listing
+            Edit Listing
           </button>
         </form>
       </div>
@@ -468,4 +497,4 @@ const CreateListing = () => {
   );
 };
 
-export default CreateListing;
+export default EditListing;

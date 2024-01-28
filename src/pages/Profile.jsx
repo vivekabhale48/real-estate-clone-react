@@ -75,7 +75,6 @@ const Profile = () => {
       console.log(querySnap);
       let listings = [];
       querySnap.forEach((doc) => {
-        console.log(doc.id);
         return listings.push({
           id: doc.id,
           data: doc.data(),
@@ -83,9 +82,6 @@ const Profile = () => {
       });
       setListings(listings);
       setLoading(false);
-      setTimeout(() => {
-        console.log(getListings);
-      }, 2000);
     }
     getUsersListing();
   }, [auth.currentUser.uid]);
