@@ -228,7 +228,7 @@ const CreateListing = () => {
                 value={name}
                 onChange={onChange}
                 placeholder="Name"
-                maxLength="32"
+                maxLength="90"
                 minLength="10"
                 required
                 className={`px-4 py-2 font-medium text-xl text-gray-700 border-gray-300 bg-white shadow-md hover:shadow-lg rounded focus:shadow-lg w-full active:shadow-lg transition duration-150 ease-in-out focus:border-slate-600`}

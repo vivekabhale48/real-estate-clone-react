@@ -1,6 +1,7 @@
 import { getAuth, updateProfile } from "firebase/auth";
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -73,13 +74,13 @@ const Profile = () => {
       const querySnap = await getDocs(q);
       console.log(querySnap);
       let listings = [];
-      querySnap.forEach((doc)=>{
-        console.log(doc.id)
+      querySnap.forEach((doc) => {
+        console.log(doc.id);
         return listings.push({
           id: doc.id,
           data: doc.data(),
-        })
-      })
+        });
+      });
       setListings(listings);
       setLoading(false);
       setTimeout(() => {
@@ -88,6 +89,21 @@ const Profile = () => {
     }
     getUsersListing();
   }, [auth.currentUser.uid]);
+
+  async function onDelete(listingId) {
+    console.log(listingId)
+    if(window.confirm("Are you sure you want to Delete ?")){
+      await deleteDoc(doc(db, "listings", listingId));
+      const updatedList = getListings.filter((list)=> list.id !== listingId);
+      setListings(updatedList);
+      toast.success("List deleted successfully!");
+    }
+  }
+
+  function onEdit(listingId) {
+    console.log(listingId)
+    navigate(`/edit-listing/${listingId}`);
+  }
 
   return (
     <>
@@ -148,21 +164,22 @@ const Profile = () => {
         </div>
       </section>
       <div className="px-2 mx-auto max-w-6xl">
-      {
-        !loading && getListings.length > 0 && (
+        {!loading && getListings.length > 0 && (
           <>
             <h2 className="text-2xl text-center font-semibold">My Listings</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {
-                getListings.map((list)=>(
-                  <ListingItem key={list.id} id={list.id} listing={list.data}/>
-                ))
-              }
+              {getListings.map((list) => (
+                <ListingItem
+                  key={list.id}
+                  id={list.id}
+                  listing={list.data}
+                  onDelete={() => onDelete(list.id)}
+                  onEdit={() => onEdit(list.id)}
+                />
+              ))}
             </ul>
           </>
-        )
-      }
-
+        )}
       </div>
     </>
   );

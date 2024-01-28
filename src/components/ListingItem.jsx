@@ -3,11 +3,13 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCurrencyRupee } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 
-const ListingItem = ({ listing, id }) => {
+const ListingItem = ({ listing, id, onDelete, onEdit }) => {
   return (
-    <li className="bg-white relative flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md transition-shadow duration-150 m-[10px]">
-      <Link to={`/category/${listing.type}/${id}`}>
+    <li className="bg-white relative flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md transition-shadow duration-150 m-[10px] overflow-hidden">
+      <Link className="contents" to={`/category/${listing.type}/${id}`}>
         <img
           className="w-full h-[170px] object-cover hover:scale-105 transition-scale duration-200 ease-in"
           loading="lazy"
@@ -61,6 +63,8 @@ const ListingItem = ({ listing, id }) => {
           </div>
         </div>
       </Link>
+      {onDelete && (<MdDelete className="absolute right-2 bottom-2 text-red-600 cursor-pointer" onClick={onDelete}/>)}
+      {onEdit && (<MdEdit className="absolute right-8 bottom-2 cursor-pointer" onClick={onEdit}/>)}
     </li>
   );
 };
