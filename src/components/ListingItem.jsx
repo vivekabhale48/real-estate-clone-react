@@ -63,8 +63,8 @@ const ListingItem = ({ listing, id, onDelete, onEdit }) => {
           </div>
         </div>
       </Link>
-      {onDelete && (<MdDelete className="absolute right-2 bottom-2 text-red-600 cursor-pointer" onClick={onDelete}/>)}
-      {onEdit && (<MdEdit className="absolute right-8 bottom-2 cursor-pointer" onClick={onEdit}/>)}
+      {onDelete && (<MdDelete className="absolute right-2 bottom-2 text-red-600 cursor-pointer hover:scale-150" onClick={onDelete}/>)}
+      {onEdit && (<MdEdit className="absolute right-8 bottom-2 cursor-pointer hover:text-blue-800 hover:scale-150" onClick={onEdit}/>)}
     </li>
   );
 };

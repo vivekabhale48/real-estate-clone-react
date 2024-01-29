@@ -96,14 +96,13 @@ const EditListing = () => {
 
   async function onSubmit(e) {
     e.preventDefault();
-    console.log([...images]);
     setLoading(true);
     if (+discountedPrice >= +regularPrice) {
       setLoading(false);
       toast.error("Discounted Price must be less than Regular Price");
       return;
     }
-    if (images.length > 6) {
+    if (images && images.length > 6) {
       setLoading(false);
       toast.error("Maximum 6 images are only allowed");
       return;
@@ -181,13 +180,20 @@ const EditListing = () => {
     }
 
     //Promise.all is used when there are multiple promises to be handled simultaneously. It in takes the array of promises and then resolves it. The below function calls the storeImage function for every image and it returns the array of uploaded image urls which it gets from the storeImage function.
-    const imgUrls = await Promise.all(
-      [...images].map((image) => storeImage(image))
-    ).catch((e) => {
-      setLoading(false);
-      toast.error("Error occurred while uploading images.");
-      return;
-    });
+    let imgUrls = [];
+
+    if(images && images.length > 0) {
+      imgUrls = await Promise.all(
+        [...images].map((image) => storeImage(image))
+      ).catch((e) => {
+        setLoading(false);
+        toast.error("Error occurred while uploading images.");
+        return;
+      });
+    }
+    else {
+      listing.imgUrls.map((imgUrl)=> imgUrls.push(imgUrl));
+    }
 
     const formDataCopy = {
       ...formData,
@@ -481,7 +487,6 @@ const EditListing = () => {
               onChange={onChange}
               accept=".jpg,.png,.jpeg"
               multiple
-              required
               className="w-full px-3 py-1.5 text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:border-slate-600"
             />
           </div>

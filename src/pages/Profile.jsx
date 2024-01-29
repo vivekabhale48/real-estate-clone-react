@@ -162,7 +162,7 @@ const Profile = () => {
       <div className="px-2 mx-auto max-w-6xl">
         {!loading && getListings.length > 0 && (
           <>
-            <h2 className="text-2xl text-center font-semibold">My Listings</h2>
+            <h2 className="text-2xl text-center font-semibold mb-4">My Listings</h2>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {getListings.map((list) => (
                 <ListingItem

@@ -25,8 +25,8 @@ const Header = () => {
     <div className='bg-white shadow-sm sticky top-0 z-40'>
         <header className='flex justify-between px-3 xl:max-w-[1280px] lg:max-w-[1024px] mx-auto'>
             <div className='flex cursor-pointer align-middle justify-center py-5' onClick={()=>navigate("/")}>
-                <img className='h-5 mr-2' src="assets/realestateindia-logo.svg" alt="realestate-logo" />
-                <img className='h-5' src="assets/realestateindia-icon.svg" alt="realestate-icon"/>
+                <img className='h-5 mr-2' src="/assets/realestateindia-logo.svg" alt="realestate-logo" />
+                <img className='h-5' src="/assets/realestateindia-icon.svg" alt="realestate-icon"/>
             </div>
             <div className='flex space-x-10'>
                 <ul  onClick={()=>navigate("/")} className={`cursor-pointer py-5 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMatchRoute("/") && "!text-black !border-b-blue-400"}`}>Home</ul>
