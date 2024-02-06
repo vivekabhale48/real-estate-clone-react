@@ -57,7 +57,6 @@ const EditListing = () => {
             setListing(docSnap.data());
             setFormData({...docSnap.data()});
             setLoading(false);
-
         }
         else {
             navigate("/");
@@ -464,16 +463,21 @@ const EditListing = () => {
           {offer && (
             <div className="md:mb-6 max-md:mb-4">
               <p className="text-lg font-semibold">Discounted Price</p>
-              <input
-                type="number"
-                id="discountedPrice"
-                value={discountedPrice}
-                required={offer}
-                onChange={onChange}
-                min="50"
-                max="400000000"
-                className="px-7 py-3 font-medium text-sm uppercase shadow-md hover:shadow-lg rounded focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out text-center"
-              />
+              <div className="flex gap-x-2">
+                <input
+                  type="number"
+                  id="discountedPrice"
+                  value={discountedPrice}
+                  required={offer}
+                  onChange={onChange}
+                  min="50"
+                  max="400000000"
+                  className="px-7 py-3 font-medium text-sm uppercase shadow-md hover:shadow-lg rounded focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out text-center"
+                />
+                {type === "rent" && (
+                  <p className="text-md font-semibold flex justify-center items-center"><BsCurrencyRupee/> / Month</p>
+                )}
+              </div>
             </div>
           )}
           <div className="md:mb-6 max-md:mb-4">
