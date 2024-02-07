@@ -6,6 +6,8 @@ import Spinner from "../components/Spinner";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/bundle";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper/modules";
+import { PiShareFatFill } from "react-icons/pi";
+import { toast } from "react-toastify";
 
 const ListingDetails = () => {
   const params = useParams();
@@ -50,6 +52,12 @@ const ListingDetails = () => {
           );
         })}
       </Swiper>
+      <div className="fixed top-[13%] right-[3%] z-10 bg-white rounded-full cursor-pointer border-gray-400 p-3">
+        <PiShareFatFill className="text-lg text-slate-500" onClick={()=>{
+          navigator.clipboard.writeText(window.location.href);
+          toast.success("Link copied to Clipboard!")
+        }}/>
+      </div>
     </main>
   );
 };
