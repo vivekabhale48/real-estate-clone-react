@@ -10,11 +10,17 @@ import { PiShareFatFill } from "react-icons/pi";
 import { toast } from "react-toastify";
 import { FaBath, FaBed, FaChair } from "react-icons/fa6";
 import { FaMapMarkerAlt, FaParking } from "react-icons/fa";
+import { getAuth } from 'firebase/auth';
+import Contact from "../components/Contact";
 
 const ListingDetails = () => {
   const params = useParams();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [contactOwner, setContactOwner] = useState(false);
+
+  const auth = getAuth();
+
   useEffect(() => {
     async function getListings() {
       const docRef = doc(db, "listings", params.listingId);
@@ -94,6 +100,16 @@ const ListingDetails = () => {
               )
             }
           </div>
+          {
+            (!contactOwner && (auth.currentUser?.uid !== listing.creator_id) && (
+              <button onClick={()=> setContactOwner(true)} className="px-7 py-3 bg-blue-600 text-white rounded shadow-md font-medium uppercase hover:shadow-lg text-sm hover:bg-blue-700 w-full text-center mt-5">Contact Owner</button>
+            ))
+          }
+          {
+            contactOwner && (
+              <Contact creatorId={listing.creator_id} listing={listing} />
+            )
+          }
         </div>
         <div className="w-full">
 
