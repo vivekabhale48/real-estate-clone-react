@@ -11,3 +11,8 @@ body {
 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
   background: #a8dadc !important
 }
+@media (max-width: 768px) {
+  .custom-map-height {
+    height: 200px;
+  }
+}
