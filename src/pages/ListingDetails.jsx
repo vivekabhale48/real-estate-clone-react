@@ -38,8 +38,7 @@ const ListingDetails = () => {
       }
     }
     getListings();
-    console.log(listing);
-  }, [params.listingId]);
+  }, [params.listingId ,listing]);
 
   if (loading) return <Spinner />;
 
@@ -57,7 +56,7 @@ const ListingDetails = () => {
           return (
             <SwiperSlide key={index}>
               <div
-                className="relative w-full overflow-hidden h-[400px]"
+                className="relative w-full overflow-hidden h-[375px]"
                 style={{
                   background: `url(${img}) center no-repeat`,
                   backgroundSize: "cover",
@@ -108,7 +107,7 @@ const ListingDetails = () => {
               <span className="font-semibold">Description - </span>
               {listing.description}
             </p>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-y-2 flex-wrap">
               <span className="flex justify-between items-center">
                 <FaBed className="mr-2" /> {listing.bedrooms} Beds
               </span>

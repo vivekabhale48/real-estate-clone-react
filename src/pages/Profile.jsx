@@ -71,8 +71,8 @@ const Profile = () => {
         where("creator_id", "==", auth.currentUser.uid),
         orderBy("timestamp", "desc")
       );
+      //getDocs method is used to get the listings by taking the query as an argument.
       const querySnap = await getDocs(q);
-      console.log(querySnap);
       let listings = [];
       querySnap.forEach((doc) => {
         return listings.push({
