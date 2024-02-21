@@ -11,10 +11,12 @@ import {
   Pagination,
   Scrollbar,
 } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
 
 const Slider = () => {
   const [listings, getListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getAllListings() {
@@ -30,10 +32,14 @@ const Slider = () => {
       });
       getListings(allListings);
       setLoading(false);
-      console.log(listings);
+      console.log(allListings);
     }
     getAllListings();
   }, []);
+
+  function redirectToDetailsPage(list) {
+    navigate(`/category/${list.data.type}/${list.id}`);
+  }
 
   if (loading) return <Spinner />;
 
@@ -47,20 +53,22 @@ const Slider = () => {
         effect="fade"
         autoplay={{ delay: 3000 }}
       >
-        {listings.map((list) =>
-          list.data.imgUrls.map((img, index) => {
-            return (
-              <SwiperSlide key={index}>
+        {listings.map((list, index) => {
+          return (
+            <SwiperSlide key={index}>
                 <div
                   className="relative w-full overflow-hidden h-[375px]"
                   style={{
-                    background: `url(${img}) center no-repeat`,
+                    background: `url(${list.data.imgUrls[0]}) center no-repeat`,
                     backgroundSize: "cover",
                   }}
+                  onClick={()=> redirectToDetailsPage(list)}
                 ></div>
-              </SwiperSlide>
-            );
-          })
+                <p className="absolute top-4 left-4 p-3 bg-[#457b9d] text-[#f1faee] opacity-90 shadow-lg rounded-br-3xl">{list.data.name}</p>
+                <p className="absolute bottom-4 left-4 p-3 bg-[#e63946] text-[#f1faee] opacity-90 shadow-lg rounded-tr-3xl">{list.data.discountedPrice ?? list.data.regularPrice} {list.data.type === 'rent' ? ' Rs/month' : ''}</p>
+            </SwiperSlide>
+          )
+        }
         )}
       </Swiper>
     )
