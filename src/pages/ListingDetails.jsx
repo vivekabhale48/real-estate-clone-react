@@ -16,6 +16,7 @@ import { PiShareFatFill } from "react-icons/pi";
 import { toast } from "react-toastify";
 import { FaBath, FaBed, FaChair } from "react-icons/fa6";
 import { FaMapMarkerAlt, FaParking } from "react-icons/fa";
+import { BsCurrencyRupee } from "react-icons/bs";
 import { getAuth } from "firebase/auth";
 import Contact from "../components/Contact";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
@@ -98,8 +99,8 @@ const ListingDetails = () => {
                 {listing.type === "rent" ? "Rent" : "Sale"}
               </p>
               {listing.offer && (
-                <p className="w-full max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md">
-                  ${+listing.regularPrice - +listing.discountedPrice} discount
+                <p className="w-full max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md flex items-center text-nowrap gap-x-2">
+                  <BsCurrencyRupee />{' '+listing.regularPrice - +listing.discountedPrice} Discount
                 </p>
               )}
             </div>
