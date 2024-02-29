@@ -32,7 +32,6 @@ const Slider = () => {
       });
       getListings(allListings);
       setLoading(false);
-      console.log(allListings);
     }
     getAllListings();
   }, []);

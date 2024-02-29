@@ -16,3 +16,9 @@ body {
     height: 200px;
   }
 }
+html::-webkit-scrollbar {
+  display: none;
+}
+html {
+  scrollbar-width: none;
+}
