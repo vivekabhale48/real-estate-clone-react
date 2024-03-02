@@ -80,18 +80,21 @@ const ListingDetails = () => {
       <div className="px-5">
         <div className="flex flex-col md:flex-row mx-auto max-w-6xl m-4 p-4 rounded-lg shadow-lg bg-white gap-5">
           <div className="w-full">
-            <p className="text-2xl font-bold mb-3 text-blue-900">
-              {listing.name} - $
-              {listing.offer
-                ? listing.discountedPrice
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                : listing.regularPrice
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            <p className="text-2xl font-bold mb-3 text-blue-900 flex items-center">
+              {listing.name} -
+              <span className="flex items-center">
+                <BsCurrencyRupee className="w-[20px] h-[20px]"/>
+                {listing.offer
+                  ? listing.discountedPrice
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  : listing.regularPrice
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </span>
             </p>
-            <p className="flex items-center mt-6 mb-3 font-semibold">
-              <FaMapMarkerAlt className="text-green-700 mr-1" />
+            <p className="flex items-start mt-6 mb-3 font-semibold gap-x-2">
+              <FaMapMarkerAlt className="text-green-700 mr-1 w-[30px] h-[30px]" />
               {listing.address}
             </p>
             <div className="flex justify-start items-center space-x-4 w-[75%]">
@@ -100,7 +103,9 @@ const ListingDetails = () => {
               </p>
               {listing.offer && (
                 <p className="w-full max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center font-semibold shadow-md flex items-center text-nowrap gap-x-2">
-                  <BsCurrencyRupee />{' '+listing.regularPrice - +listing.discountedPrice} Discount
+                  <BsCurrencyRupee />
+                  {" " + listing.regularPrice - +listing.discountedPrice}{" "}
+                  Discount
                 </p>
               )}
             </div>
