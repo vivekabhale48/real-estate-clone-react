@@ -38,7 +38,7 @@ const Offers = () => {
   if (loading) return <Spinner />;
 
   return (
-    <div className="px-2 mx-auto max-w-6xl mt-10">
+    <div className="px-2 mx-auto max-w-6xl mt-5">
       {offerListings && offerListings.length > 0 && (
         <>
           <h2 className="text-5xl text-center font-semibold mb-4">Offers</h2>
@@ -50,7 +50,7 @@ const Offers = () => {
         </>
       )}
       {showBtn && (
-        <div className="w-full flex justify-center mt-5">
+        <div className="w-full flex justify-center mt-2">
           <button
             onClick={() => setLoadListings(loadListings + 4)}
             type="button"
@@ -61,7 +61,7 @@ const Offers = () => {
         </div>
       )}
       {!showBtn && (
-        <div className="w-full flex justify-center mt-5">
+        <div className="w-full flex justify-center mt-2">
           <button
             onClick={() => {setLoadListings(8); setShowBtn(true);}}
             type="button"

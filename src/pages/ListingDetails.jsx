@@ -147,7 +147,7 @@ const ListingDetails = () => {
             <MapContainer
               center={[listing.geolocation.lat, listing.geolocation.lng]}
               zoom={13}
-              scrollWheelZoom={false}
+              scrollWheelZoom={true}
               style={{ height: "100%", width: "100%" }}
             >
               <TileLayer

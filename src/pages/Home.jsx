@@ -104,7 +104,7 @@ const Home = () => {
           rentListings && rentListings.length > 0 && (
             <>
             <h2 className="text-2xl font-semibold mt-8 pl-[10px]">Places for Rent</h2>
-            <Link to={'/category/sell'}>
+            <Link to={'/category/rent'}>
               <p className='pl-[10px] text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out'>Show more places for Rent</p>
             </Link>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
