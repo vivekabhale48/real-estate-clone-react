@@ -80,9 +80,9 @@ const ListingDetails = () => {
       <div className="px-5">
         <div className="flex flex-col md:flex-row mx-auto max-w-6xl m-4 p-4 rounded-lg shadow-lg bg-white gap-5">
           <div className="w-full">
-            <p className="text-2xl font-bold mb-3 text-blue-900 flex items-center">
-              {listing.name} -
-              <span className="flex items-center">
+            <p className="text-2xl font-bold mb-3 text-blue-900 flex items-center justify-between gap-y-2 flex-wrap">
+              {listing.name}
+              <span className="flex items-center bg-[#46a1d5] p-1 rounded text-white">
                 <BsCurrencyRupee className="w-[20px] h-[20px]"/>
                 {listing.offer
                   ? listing.discountedPrice

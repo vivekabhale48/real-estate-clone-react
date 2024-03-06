@@ -35,3 +35,8 @@ html {
   visibility: visible;
   opacity: 1;
 }
+.spinner {
+  @media (max-width: 720px) {
+    width: 80px;
+  }
+}
