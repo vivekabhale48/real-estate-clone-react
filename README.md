@@ -29,6 +29,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+Few images of project
+![image](https://github.com/vivekabhale48/real-estate-clone-react/assets/109742123/4561c1f5-90a8-4f38-9eb6-18cd7f6000fd)
+![image](https://github.com/vivekabhale48/real-estate-clone-react/assets/109742123/f4704245-c9ed-4345-b010-84c3d83a6643)
+
+
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
